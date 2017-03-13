@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26228.4
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "BloodGroups.Database", "BloodGroups.Database\BloodGroups.Database.sqlproj", "{F5388A96-30D3-4EFD-82A8-088C76DB6558}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BloodDonations.Api", "BloodDonations.Api\BloodDonations.Api.csproj", "{30F7B3FC-EBB5-4D46-B9B4-3AE39DAD4FCF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F5388A96-30D3-4EFD-82A8-088C76DB6558}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5388A96-30D3-4EFD-82A8-088C76DB6558}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5388A96-30D3-4EFD-82A8-088C76DB6558}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{F5388A96-30D3-4EFD-82A8-088C76DB6558}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5388A96-30D3-4EFD-82A8-088C76DB6558}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5388A96-30D3-4EFD-82A8-088C76DB6558}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{30F7B3FC-EBB5-4D46-B9B4-3AE39DAD4FCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30F7B3FC-EBB5-4D46-B9B4-3AE39DAD4FCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30F7B3FC-EBB5-4D46-B9B4-3AE39DAD4FCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30F7B3FC-EBB5-4D46-B9B4-3AE39DAD4FCF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

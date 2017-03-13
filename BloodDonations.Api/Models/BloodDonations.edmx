@@ -1,0 +1,332 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="BloodDonationsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BloodGroups">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="BloodType" Type="nvarchar" MaxLength="5" Nullable="false" />
+          <Property Name="RhFactor" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DonorDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Gender" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="DOB" Type="date" Nullable="false" />
+          <Property Name="BloodGroupId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LoginDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" Nullable="false" />
+          <Property Name="DonorId" Type="bigint" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Salt" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="RoleId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Role" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserDonationHistory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" Nullable="false" />
+          <Property Name="DonorId" Type="bigint" Nullable="false" />
+          <Property Name="DonationDate" Type="date" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_DonorDetails_BloodGroups">
+          <End Role="BloodGroups" Type="Self.BloodGroups" Multiplicity="1" />
+          <End Role="DonorDetails" Type="Self.DonorDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BloodGroups">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DonorDetails">
+              <PropertyRef Name="BloodGroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LoginDetails_DonorDetails">
+          <End Role="DonorDetails" Type="Self.DonorDetails" Multiplicity="1" />
+          <End Role="LoginDetails" Type="Self.LoginDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DonorDetails">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LoginDetails">
+              <PropertyRef Name="DonorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LoginDetails_Roles">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+          <End Role="LoginDetails" Type="Self.LoginDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LoginDetails">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserDonationHistory_DonorDetails">
+          <End Role="DonorDetails" Type="Self.DonorDetails" Multiplicity="1" />
+          <End Role="UserDonationHistory" Type="Self.UserDonationHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DonorDetails">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserDonationHistory">
+              <PropertyRef Name="DonorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BloodDonationsModelStoreContainer">
+          <EntitySet Name="BloodGroups" EntityType="Self.BloodGroups" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DonorDetails" EntityType="Self.DonorDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LoginDetails" EntityType="Self.LoginDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserDonationHistory" EntityType="Self.UserDonationHistory" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_DonorDetails_BloodGroups" Association="Self.FK_DonorDetails_BloodGroups">
+            <End Role="BloodGroups" EntitySet="BloodGroups" />
+            <End Role="DonorDetails" EntitySet="DonorDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LoginDetails_DonorDetails" Association="Self.FK_LoginDetails_DonorDetails">
+            <End Role="DonorDetails" EntitySet="DonorDetails" />
+            <End Role="LoginDetails" EntitySet="LoginDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LoginDetails_Roles" Association="Self.FK_LoginDetails_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="LoginDetails" EntitySet="LoginDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserDonationHistory_DonorDetails" Association="Self.FK_UserDonationHistory_DonorDetails">
+            <End Role="DonorDetails" EntitySet="DonorDetails" />
+            <End Role="UserDonationHistory" EntitySet="UserDonationHistory" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BloodDonationsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="BloodGroups">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="BloodType" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RhFactor" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="DonorDetails" Relationship="Self.FK_DonorDetails_BloodGroups" FromRole="BloodGroups" ToRole="DonorDetails" />
+        </EntityType>
+        <EntityType Name="DonorDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Gender" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DOB" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="BloodGroupId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="BloodGroups" Relationship="Self.FK_DonorDetails_BloodGroups" FromRole="DonorDetails" ToRole="BloodGroups" />
+          <NavigationProperty Name="LoginDetails" Relationship="Self.FK_LoginDetails_DonorDetails" FromRole="DonorDetails" ToRole="LoginDetails" />
+          <NavigationProperty Name="UserDonationHistory" Relationship="Self.FK_UserDonationHistory_DonorDetails" FromRole="DonorDetails" ToRole="UserDonationHistory" />
+        </EntityType>
+        <EntityType Name="LoginDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" />
+          <Property Name="DonorId" Type="Int64" Nullable="false" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Salt" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RoleId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="DonorDetails" Relationship="Self.FK_LoginDetails_DonorDetails" FromRole="LoginDetails" ToRole="DonorDetails" />
+          <NavigationProperty Name="Roles" Relationship="Self.FK_LoginDetails_Roles" FromRole="LoginDetails" ToRole="Roles" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Role" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="LoginDetails" Relationship="Self.FK_LoginDetails_Roles" FromRole="Roles" ToRole="LoginDetails" />
+        </EntityType>
+        <EntityType Name="UserDonationHistory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" />
+          <Property Name="DonorId" Type="Int64" Nullable="false" />
+          <Property Name="DonationDate" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="DonorDetails" Relationship="Self.FK_UserDonationHistory_DonorDetails" FromRole="UserDonationHistory" ToRole="DonorDetails" />
+        </EntityType>
+        <Association Name="FK_DonorDetails_BloodGroups">
+          <End Role="BloodGroups" Type="Self.BloodGroups" Multiplicity="1" />
+          <End Role="DonorDetails" Type="Self.DonorDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BloodGroups">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DonorDetails">
+              <PropertyRef Name="BloodGroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LoginDetails_DonorDetails">
+          <End Role="DonorDetails" Type="Self.DonorDetails" Multiplicity="1" />
+          <End Role="LoginDetails" Type="Self.LoginDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DonorDetails">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LoginDetails">
+              <PropertyRef Name="DonorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserDonationHistory_DonorDetails">
+          <End Role="DonorDetails" Type="Self.DonorDetails" Multiplicity="1" />
+          <End Role="UserDonationHistory" Type="Self.UserDonationHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DonorDetails">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserDonationHistory">
+              <PropertyRef Name="DonorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LoginDetails_Roles">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+          <End Role="LoginDetails" Type="Self.LoginDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LoginDetails">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BloodDonationsEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BloodGroups" EntityType="Self.BloodGroups" />
+          <EntitySet Name="DonorDetails" EntityType="Self.DonorDetails" />
+          <EntitySet Name="LoginDetails" EntityType="Self.LoginDetails" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" />
+          <EntitySet Name="UserDonationHistory" EntityType="Self.UserDonationHistory" />
+          <AssociationSet Name="FK_DonorDetails_BloodGroups" Association="Self.FK_DonorDetails_BloodGroups">
+            <End Role="BloodGroups" EntitySet="BloodGroups" />
+            <End Role="DonorDetails" EntitySet="DonorDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LoginDetails_DonorDetails" Association="Self.FK_LoginDetails_DonorDetails">
+            <End Role="DonorDetails" EntitySet="DonorDetails" />
+            <End Role="LoginDetails" EntitySet="LoginDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserDonationHistory_DonorDetails" Association="Self.FK_UserDonationHistory_DonorDetails">
+            <End Role="DonorDetails" EntitySet="DonorDetails" />
+            <End Role="UserDonationHistory" EntitySet="UserDonationHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LoginDetails_Roles" Association="Self.FK_LoginDetails_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="LoginDetails" EntitySet="LoginDetails" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BloodDonationsModelStoreContainer" CdmEntityContainer="BloodDonationsEntities">
+          <EntitySetMapping Name="BloodGroups">
+            <EntityTypeMapping TypeName="BloodDonationsModel.BloodGroups">
+              <MappingFragment StoreEntitySet="BloodGroups">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="BloodType" ColumnName="BloodType" />
+                <ScalarProperty Name="RhFactor" ColumnName="RhFactor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DonorDetails">
+            <EntityTypeMapping TypeName="BloodDonationsModel.DonorDetails">
+              <MappingFragment StoreEntitySet="DonorDetails">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="BloodGroupId" ColumnName="BloodGroupId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LoginDetails">
+            <EntityTypeMapping TypeName="BloodDonationsModel.LoginDetails">
+              <MappingFragment StoreEntitySet="LoginDetails">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="DonorId" ColumnName="DonorId" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Salt" ColumnName="Salt" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="BloodDonationsModel.Roles">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserDonationHistory">
+            <EntityTypeMapping TypeName="BloodDonationsModel.UserDonationHistory">
+              <MappingFragment StoreEntitySet="UserDonationHistory">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="DonorId" ColumnName="DonorId" />
+                <ScalarProperty Name="DonationDate" ColumnName="DonationDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
