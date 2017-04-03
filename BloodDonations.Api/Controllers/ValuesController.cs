@@ -4,21 +4,25 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using BloodDonations.Api.Models;
 
 namespace BloodDonations.Api.Controllers
 {
-    [Authorize]
     public class ValuesController : ApiController
     {
-        // GET api/values
+        /// <summary>
+        /// Get values 
+        /// </summary>
+        /// <returns>IEnumerable of string</returns>
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
         }
 
         // POST api/values
-        public void Post([FromBody]string value)
+        public bool Post([FromBody]LoginDetails loginDetails)
         {
+            return new AccountController().AuthenticateUser(loginDetails);
         }
 
         // PUT api/values/5

@@ -32,5 +32,11 @@ namespace BloodDonations.Api.Repository.DbRepositories
                 return false;
             }
         }
+
+        public bool AuthenticateLogin(LoginDetails loginDetails)
+        {
+            var user = this.GetAll().FirstOrDefault(p => p.Username == loginDetails.Username);
+            return user != null && user.Password == loginDetails.Password;
+        }
     }
 }

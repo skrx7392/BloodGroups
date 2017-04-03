@@ -17,10 +17,7 @@ namespace BloodDonations.Api.Repository
             this.databaseFactory = databaseFactory;
         }
 
-        protected DbContext BloodDonationsEntitiesContext
-        {
-            get { return bloodDonationsEntitiesContext ?? (bloodDonationsEntitiesContext = databaseFactory.GetBloodDonationsEntitiesContext()); }
-        }
+        protected DbContext BloodDonationsEntitiesContext => bloodDonationsEntitiesContext ?? (bloodDonationsEntitiesContext = databaseFactory.GetBloodDonationsEntitiesContext());
 
         public void Commit()
         {

@@ -10,5 +10,6 @@ namespace BloodDonations.Api.Repository.Interfaces.DbRepositories
     public interface ILoginDetailsRepository : IRepositoryBase<LoginDetails>
     {
         bool RegisterUser(LoginDetails loginDetails);
+        bool AuthenticateLogin(LoginDetails loginDetails);
     }
 }

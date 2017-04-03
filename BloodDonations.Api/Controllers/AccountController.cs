@@ -2,20 +2,14 @@
 using BloodDonations.Api.Repository;
 using BloodDonations.Api.Repository.DbRepositories;
 using BloodDonations.Api.Repository.Interfaces.DbRepositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace BloodDonations.Api.Controllers
 {
     public class AccountController : ApiController
     {
-        private ILoginDetailsRepository LoginDetailsRepository;
-        private IDatabaseFactory DatabaseFactory;
+        private readonly ILoginDetailsRepository LoginDetailsRepository;
+        private readonly IDatabaseFactory DatabaseFactory;
 
         public AccountController()
         {
@@ -34,6 +28,13 @@ namespace BloodDonations.Api.Controllers
                 return Ok();
             else
                 return InternalServerError();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public bool AuthenticateUser(LoginDetails loginDetails)
+        {
+            return ModelState.IsValid && LoginDetailsRepository.AuthenticateLogin(loginDetails);
         }
     }
 }
